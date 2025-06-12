@@ -1,0 +1,40 @@
+<div class="panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <!-- Search Bar and Filters -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center mb-4">
+        <div class="flex items-center gap-2">
+            <input
+                [(ngModel)]="searchQuery"
+                type="text"
+                class="form-input w-full md:w-80"
+                placeholder="Search internships..."
+                (input)="filterInternships()"
+            />
+            <button type="button" class="btn btn-primary" (click)="filterInternships()">Search</button>
+        </div>
+        <div class="flex items-center gap-2 ltr:ml-auto rtl:mr-auto">
+            <select [(ngModel)]="selectedDepartment" class="form-select" (change)="filterInternships()">
+                <option value="">All Departments</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Design">Design</option>
+                <option value="Finance">Finance</option>
+            </select>
+            <select [(ngModel)]="selectedLocation" class="form-select" (change)="filterInternships()">
+                <option value="">All Locations</option>
+                <option value="Remote">Remote</option>
+                <option value="San Francisco">San Francisco</option>
+                <option value="New York">New York</option>
+            </select>
+            <select [(ngModel)]="selectedDuration" class="form-select" (change)="filterInternships()">
+                <option value="">All Durations</option>
+                <option value="Short-Term">Short-Term</option>
+                <option value="Long-Term">Long-Term</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Internship Listings -->
+    <div class="internship-listings grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <app-internship-card *ngFor="let internship of filteredInternships" [internship]="internship"></app-internship-card>
+    </div>
+</div>

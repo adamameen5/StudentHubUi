@@ -1,0 +1,8 @@
+<div class="panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <h2 class="text-xl font-semibold mb-4">Your Subjects</h2>
+
+    <!-- Subject Listings -->
+    <div class="subject-listings grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <app-course-engagement-subject-card *ngFor="let subject of subjects" [subject]="subject"></app-course-engagement-subject-card>
+    </div>
+</div>

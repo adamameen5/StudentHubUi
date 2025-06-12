@@ -1,0 +1,14 @@
+<div class="alumni-card bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <div class="flex items-center">
+        <img class="w-12 h-12 rounded-full mr-4" [src]="alumni.photoUrl" alt="Alumni Photo" />
+        <div>
+            <h4 class="font-semibold text-lg text-primary">{{ alumni.name }}</h4>
+            <p class="text-sm text-gray-500">{{ alumni.position }} at {{ alumni.company }}</p>
+        </div>
+    </div>
+    <p class="text-sm text-gray-500 mt-2"><strong>Location:</strong> {{ alumni.location }}</p>
+    <p class="text-sm text-gray-500"><strong>Industry:</strong> {{ alumni.industry }}</p>
+    <p class="text-sm text-gray-500"><strong>Graduation Year:</strong> {{ alumni.graduationYear }}</p>
+    <p class="text-sm mt-2">{{ alumni.bio }}</p>
+    <button class="btn btn-primary mt-4 w-full">Connect</button>
+</div>

@@ -1,0 +1,11 @@
+<div class="lecturer-details p-5">
+    <h2 class="text-xl font-semibold mb-4">{{ lecturer.name }}</h2>
+    <p><strong>Email:</strong> {{ lecturer.email }}</p>
+    <p><strong>Office Hours:</strong> {{ lecturer.officeHours }}</p>
+    <p><strong>Details:</strong> {{ lecturer.details }}</p>
+    
+    <div class="mt-4">
+        <button class="btn btn-info" (click)="scheduleMeeting(lecturer)">Schedule a Meeting</button>
+        <button class="btn btn-primary" (click)="sendEmail(lecturer.email)">Send Email</button>
+    </div>
+</div>

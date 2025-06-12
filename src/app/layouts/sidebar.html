@@ -1,0 +1,178 @@
+﻿<div [ngClass]="{ 'dark text-white-dark': store.semidark }">
+    <nav class="sidebar fixed bottom-0 top-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
+        <div class="h-full bg-white dark:bg-[#0e1726]">
+            <div class="flex items-center justify-between px-4 py-3">
+                <a routerLink="/home" class="main-logo flex shrink-0 items-center">
+                    <img class="ml-[5px] w-8 flex-none" src="./assets/images/zolapreplogo.png" alt="" />
+                    <div class="flex flex-col">
+                        <span class="align-middle text-2xl font-semibold dark:text-white-light lg:inline ltr:ml-1.5 rtl:mr-1.5">
+                            ZolaPrep
+                        </span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 lg:inline ltr:ml-1.5 rtl:mr-1.5">
+                            v{{ version }}
+                        </span>
+                    </div>
+                </a>
+                <a
+                    href="javascript:;"
+                    class="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 hover:text-primary dark:text-white-light dark:hover:bg-dark-light/10 rtl:rotate-180"
+                    (click)="storeData.dispatch({ type: 'toggleSidebar'})"
+                >
+                    <icon-carets-down class="m-auto rotate-90" />
+                </a>
+            </div>
+            <ng-scrollbar class="relative !h-[calc(100vh-80px)]" appearance="compact">
+                <ul class="relative space-y-0.5 p-4 py-0 font-semibold">
+                    <li class="nav-item">
+                        <a routerLink="/home" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                            <div class="flex items-center">
+                                <icon-menu-dashboard class="shrink-0 group-hover:!text-primary" />
+
+                                <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                    >{{ 'home' | translate }}</span
+                                >
+                            </div>
+                        </a>
+                    </li>
+                    <li class="accordion menu nav-item">
+                        <button
+                            type="button"
+                            class="nav-link group w-full"
+                            [ngClass]="{ active: activeDropdown.includes('tools') }"
+                            (click)="toggleAccordion('tools')"
+                        >
+                            <div class="flex items-center">
+                                <icon-menu-course-engagement class="shrink-0 group-hover:!text-primary" />
+
+                                <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">
+                                    {{ 'tools' | translate }}
+                                </span>
+                            </div>
+                            <div [ngClass]="{ 'rtl:rotate-90 -rotate-90': !activeDropdown.includes('tools') }">
+                                <icon-caret-down />
+                            </div>
+                        </button>
+                        <div [@slideDownUp]="!activeDropdown.includes('tools')" class="accordion-content">
+                            <ul class="sub-menu text-gray-500">
+                                <li>
+                                    <a routerLink="/app/tasks" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'tasks' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a routerLink="/app/projects" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'projects' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a routerLink="/app/notes" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'notes' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a routerLink="/app/scrumboard" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'scrumboard' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a routerLink="/app/course-engagement" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'course engagement' | translate }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="accordion menu nav-item">
+                        <button
+                            type="button"
+                            class="nav-link group w-full"
+                            [ngClass]="{ active: activeDropdown.includes('network') }"
+                            (click)="toggleAccordion('network')"
+                        >
+                            <div class="flex items-center">
+                                <icon-menu-alumni-connect class="shrink-0 group-hover:!text-primary" />
+
+                                <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">
+                                    {{ 'network' | translate }}
+                                </span>
+                            </div>
+                            <div [ngClass]="{ 'rtl:rotate-90 -rotate-90': !activeDropdown.includes('network') }">
+                                <icon-caret-down />
+                            </div>
+                        </button>
+                        <div [@slideDownUp]="!activeDropdown.includes('network')" class="accordion-content">
+                            <ul class="sub-menu text-gray-500">
+                                <li>
+                                    <a routerLink="/app/contacts" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'friends' | translate }}</a>
+                                </li>
+                                <li>
+                                    <a routerLink="/app/alumni-connect" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'alumni connect' | translate }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <ul>
+                            <li class="nav-item">
+                                <a routerLink="/app/job-board" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-menu-job-board class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'job board' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/app/project-showcase" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-menu-project-showcase class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'project showcase' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/app/skills-development-and-certifications" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-menu-skills-and-certifications class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'skills and certifications' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/app/ai-project-hub" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-zip-file class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'ai projects hub' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>                            
+                            <li class="nav-item">
+                                <a routerLink="/app/events" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-events-and-conference class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'events and conferences' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/users/user-account-settings" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-settings  class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >{{ 'settings' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ng-scrollbar>
+        </div>
+    </nav>
+</div>

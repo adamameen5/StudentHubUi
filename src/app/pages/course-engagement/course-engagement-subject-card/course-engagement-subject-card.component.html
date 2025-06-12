@@ -1,0 +1,6 @@
+<div class="subject-card bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <h4 class="font-semibold text-lg text-primary">{{ subject.name }}</h4>
+    <p class="text-sm text-gray-500"><strong>Code:</strong> {{ subject.code }}</p>
+    <p class="text-sm text-gray-500"><strong>Credits:</strong> {{ subject.credits }}</p>
+    <button class="btn btn-primary mt-2" (click)="viewLecturers(subject)">View Lecturers</button>
+</div>

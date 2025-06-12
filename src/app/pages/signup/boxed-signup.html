@@ -1,0 +1,165 @@
+<div>
+    <div
+        class="relative flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat px-6 dark:bg-[#060818] sm:px-16">
+        <div
+            class="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
+            <div
+                class="relative flex flex-col justify-center rounded-md bg-white/60 px-6 py-20 backdrop-blur-lg dark:bg-black/50 lg:min-h-[500px]">
+                <div class="mx-auto w-full max-w-[440px]">
+                    <div class="mb-10">
+                        <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">Sign Up
+                        </h1>
+                        <p class="text-base font-bold leading-normal text-white-dark">Enter your email and password to
+                            register</p>
+                    </div>
+                    <form class="space-y-5 dark:text-white mb-10" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                        <div
+                            [ngClass]="isSubmitForm4 ? signUpForm.controls['firstName'].errors ? 'has-error' : 'has-success' : ''">
+                            <label for="firstName">First Name</label>
+                            <div class="relative text-white-dark">
+                                <input id="firstName" type="text" placeholder="Enter First Name"
+                                    class="form-input ps-10 placeholder:text-white-dark"
+                                    [formControl]="$any(signUpForm.controls['firstName'])" />
+                                <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                                    <icon-user [fill]="true" />
+                                </span>
+                            </div>
+                            <ng-container *ngIf="isSubmitForm4 && !signUpForm.controls['firstName'].errors">
+                                <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                            </ng-container>
+                            <ng-container *ngIf="isSubmitForm4 && signUpForm.controls['firstName'].errors">
+                                <p class="mt-1 text-danger">Please fill the first name</p>
+                            </ng-container>
+                        </div>
+                        <div
+                            [ngClass]="isSubmitForm4 ? signUpForm.controls['lastName'].errors ? 'has-error' : 'has-success' : ''">
+                            <label for="lastName">Last Name</label>
+                            <div class="relative text-white-dark">
+                                <input id="lastName" type="text" placeholder="Enter Last Name"
+                                    class="form-input ps-10 placeholder:text-white-dark"
+                                    [formControl]="$any(signUpForm.controls['lastName'])" />
+                                <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                                    <icon-user [fill]="true" />
+                                </span>
+                            </div>
+                            <ng-container *ngIf="isSubmitForm4 && !signUpForm.controls['lastName'].errors">
+                                <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                            </ng-container>
+                            <ng-container *ngIf="isSubmitForm4 && signUpForm.controls['lastName'].errors">
+                                <p class="mt-1 text-danger">Please fill the last name</p>
+                            </ng-container>
+                        </div>
+                        <div
+                            [ngClass]="isSubmitForm4 ? signUpForm.controls['userName'].errors ? 'has-error' : 'has-success' : ''">
+                            <label for="userName">User Name</label>
+                            <div class="relative text-white-dark">
+                                <input id="userName" type="text" placeholder="Enter User Name"
+                                    class="form-input ps-10 placeholder:text-white-dark"
+                                    [formControl]="$any(signUpForm.controls['userName'])" />
+                                <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                                    <icon-user [fill]="true" />
+                                </span>
+                            </div>
+                            <ng-container *ngIf="isSubmitForm4 && !signUpForm.controls['userName'].errors">
+                                <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                            </ng-container>
+                            <ng-container *ngIf="isSubmitForm4 && signUpForm.controls['userName'].errors">
+                                <p class="mt-1 text-danger">Please fill the user name</p>
+                            </ng-container>
+                        </div>
+                        <div
+                            [ngClass]="isSubmitForm4 ? signUpForm.controls['email'].errors ? 'has-error' : 'has-success' : ''">
+                            <label for="email">Email</label>
+                            <div class="relative text-white-dark">
+                                <input id="email" type="email" placeholder="Enter Email"
+                                    class="form-input ps-10 placeholder:text-white-dark"
+                                    [formControl]="$any(signUpForm.controls['email'])" />
+                                <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                                    <icon-mail [fill]="true" />
+                                </span>
+                            </div>
+                            <ng-container *ngIf="isSubmitForm4 && !signUpForm.controls['email'].errors">
+                                <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                            </ng-container>
+                            <ng-container *ngIf="isSubmitForm4 && signUpForm.controls['email'].errors">
+                                <p class="mt-1 text-danger">Please enter a valid email</p>
+                            </ng-container>
+                        </div>
+                        <div
+                            [ngClass]="isSubmitForm4 ? signUpForm.controls['password'].errors ? 'has-error' : 'has-success' : ''">
+                            <label for="password">Password</label>
+                            <div class="relative text-white-dark">
+                                <input
+                                  id="password"
+                                  [type]="passwordFieldType"
+                                  placeholder="Enter Password"
+                                  class="form-input ps-10 placeholder:text-white-dark"
+                                  [formControl]="$any(signUpForm.controls['password'])"
+                                />
+                                <span class="absolute start-4 top-1/2 -translate-y-1/2">
+                                  <icon-lock-dots [fill]="true" />
+                                </span>
+                                
+                                <!-- Toggle Icon/Button -->
+                                <button
+                                  type="button"
+                                  (click)="togglePasswordVisibility()"
+                                  class="absolute end-4 top-1/2 -translate-y-1/2 text-white-dark focus:outline-none"
+                                >
+                                <icon-eye *ngIf="passwordFieldType === 'password'" />
+                                <icon-eye-lock *ngIf="passwordFieldType === 'text'" />
+                                </button>
+                            </div>
+                              
+                            <ng-container *ngIf="isSubmitForm4 && !signUpForm.controls['password'].errors">
+                                <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                            </ng-container>
+                            <ng-container *ngIf="isSubmitForm4 && signUpForm.controls['password'].errors">
+                                <p class="mt-1 text-danger">Please enter a strong password</p>
+                            </ng-container>
+                        </div>
+                        <div>
+                            <label class="flex cursor-pointer items-center">
+                                <input type="checkbox" class="form-checkbox bg-white dark:bg-black"
+                                    [formControl]="$any(signUpForm.controls['allowEmailReminders'])" />
+                                <span class="text-white-dark">Allow StudentHub to send email reminders and
+                                    notifications</span>
+                            </label>
+                        </div>
+                        <button type="submit"
+                            [disabled]="isSignInButtonDisabled"
+                            class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                            <span *ngIf="isSignInButtonDisabled"
+                                class="animate-spin border-2 border-white border-l-transparent rounded-full w-5 h-5 ltr:mr-4 rtl:ml-4 inline-block align-middle"></span>
+                            <span *ngIf="isSignInButtonDisabled">Loading</span>
+                            <span *ngIf="!isSignInButtonDisabled">Sign Up</span>
+                        </button>
+                    </form>
+                    <!-- <div id="googleSignUpButton"></div> -->
+                    <!-- <div class="flex items-center justify-center my-4">
+                        <div class="border-t w-full border-gray-300 dark:border-gray-700"></div>
+                        <span class="px-4 text-sm font-medium text-gray-500 dark:text-gray-400">OR</span>
+                        <div class="border-t w-full border-gray-300 dark:border-gray-700"></div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="button">
+                            <span><div id="googleSignUpButton"></div></span>
+                        </button>
+                    </div> -->
+                    <div class="text-center dark:text-white">
+                        Already have an account ?
+                        <a routerLink="/auth/boxed-signin"
+                            class="uppercase text-primary underline transition hover:text-black dark:hover:text-white">
+                            SIGN IN
+                        </a>
+                        <p class="dark:text-white" style="margin-top: 10px;">© {{ currYear }}. ZolaPrep - Product of <a href="https://zolatik.com" target="_blank"
+                            class="text-primary transition hover:text-black dark:hover:text-white">
+                            Zolatik
+                        </a> | All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

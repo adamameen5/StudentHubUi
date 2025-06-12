@@ -1,0 +1,104 @@
+<div class="panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Your Projects</h2>
+
+        <!-- Show Create Button Only If There Are Projects -->
+        <button *ngIf="projects.length > 0" class="btn btn-primary" (click)="openModal()">+ Create New Project</button>
+    </div>
+
+    <!-- Check if there are projects -->
+    <div *ngIf="projects.length > 0; else noProjects">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div *ngFor="let project of projects" class="project-card bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow relative">
+                <!-- Project Thumbnail -->
+                <div class="project-thumbnail h-40 bg-gray-200 rounded-md flex items-center justify-center mb-4">
+                    <img *ngIf="project.imageUrl" [src]="project.imageUrl | assetPath" fallbackImage="./assets/images/no-image-placeholder.png" alt="Project Image" class="h-full w-full object-cover rounded-md">
+                    <i *ngIf="!project.imageUrl" class="fas fa-folder-open text-gray-400 text-5xl"></i>
+                </div>
+
+                <!-- Project Info -->
+                <h4 class="font-semibold text-lg text-primary">{{ project.name }}</h4>
+                <p class="text-sm text-gray-500"><strong>Subject:</strong> {{ project.description }}</p>
+                <p class="text-sm text-gray-500"><strong>Team Members:</strong> {{ project.teamMembers }}</p>
+                
+                <!-- Status Badge -->
+                <span class="status-badge text-xs px-3 py-1 rounded-full font-medium mr-1" 
+                      [ngClass]="{'bg-green-200 text-green-700': project.status === 'Ongoing', 
+                                  'bg-blue-200 text-blue-700': project.status === 'Done'}">
+                    {{ project.status }}
+                </span>
+
+                <!-- Role Badge -->
+                <span class="status-badge text-xs px-3 py-1 rounded-full font-medium" 
+                      [ngClass]="{'bg-orange-200 text-orange-700': project.role === 'Owner', 
+                                  'bg-yellow-200 text-yellow-700': project.role === 'Member'}">
+                    {{ project.role }}
+                </span>
+
+                <!-- Actions -->
+                <div class="flex justify-between mt-4">
+                    <button class="btn btn-outline-primary text-sm" (click)="viewProject(project)">View</button>
+                    <button class="btn btn-secondary text-sm" (click)="editProject(project)">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Projects Placeholder -->
+    <ng-template #noProjects>
+        <div class="flex flex-col items-center text-center">
+            <i class="fas fa-folder-open text-gray-400 text-6xl mb-3"></i>
+            <p class="text-gray-500">You haven’t created or been assigned to any projects yet.</p>
+            <button class="btn btn-primary mt-3" (click)="addProjectModal.open()">+ Create New Project</button>
+        </div>
+    </ng-template>
+</div>
+
+<!-- Create New Project Modal -->
+<ngx-custom-modal #addProjectModal class="no-footer">
+    <ng-template #modalHeader>
+        <div class="!font-medium">{{ projectForm.value.id ? 'Edit Project' : 'Create New Project' }}</div>
+    </ng-template>
+
+    <ng-template #modalBody>
+        <form [formGroup]="projectForm" (submit)="saveProject()">
+            <!-- Project Name -->
+            <div class="mb-4">
+                <label for="name" class="block font-medium">Project Name</label>
+                <input id="name" type="text" class="form-input w-full" formControlName="name" placeholder="Enter project name" />
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label for="description" class="block font-medium">Description</label>
+                <textarea id="description" class="form-textarea w-full" formControlName="description" rows="3" placeholder="Enter project description"></textarea>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-4">
+                <label for="image" class="block font-medium">Project Image</label>
+                <input id="image" type="file" accept="image/*" class="form-input w-full" (change)="onFileSelected($event)" />
+                <div *ngIf="imagePreview" class="mt-2">
+                    <img [src]="isBase64(imagePreview) ? imagePreview : (imagePreview | assetPath)" fallbackImage="./assets/images/no-image-placeholder.png" alt="Image Preview" class="max-w-xs h-auto" />
+                </div>
+            </div>
+
+            <!-- Dates: Start & End -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="startDate" class="block font-medium">Start Date</label>
+                    <input id="startDate" type="date" class="form-input w-full" formControlName="startDate" />
+                </div>
+                <div>
+                    <label for="endDate" class="block font-medium">End Date</label>
+                    <input id="endDate" type="date" class="form-input w-full" formControlName="endDate" />
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button class="btn btn-outline-danger" type="button" (click)="closeModal()">Cancel</button>
+                <button class="btn btn-primary ml-3" type="submit" [disabled]="projectForm.invalid">{{ projectForm.value.id ? 'Update' : 'Create' }}</button>
+            </div>
+        </form>
+    </ng-template>
+</ngx-custom-modal>

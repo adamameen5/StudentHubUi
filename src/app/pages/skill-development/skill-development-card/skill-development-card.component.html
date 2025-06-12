@@ -1,0 +1,7 @@
+<div class="skill-card bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <h4 class="font-semibold text-lg text-primary">{{ course.title }}</h4>
+    <p class="text-sm text-gray-500"><strong>Provider:</strong> {{ course.provider }}</p>
+    <p class="text-sm text-gray-500"><strong>Duration:</strong> {{ course.duration }}</p>
+    <p class="text-sm mt-2">{{ course.description }}</p>
+    <button class="btn btn-primary mt-4 w-full" (click)="enroll(course)">Enroll Now</button>
+</div>

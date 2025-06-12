@@ -1,0 +1,512 @@
+<div>
+    <div class="pt-5">
+        <div class="mb-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            <div class="panel h-full">
+                <div class="mb-5 flex items-center dark:text-white-light">
+                    <h5 class="text-lg font-semibold">Your Tasks</h5>
+                    <div class="dropdown ltr:ml-auto rtl:mr-auto">
+                        <div hlMenu>
+                            <a href="javascript:;" hlMenuButton class="align-middle">
+                                <icon-horizontal-dots class="h-5 w-5 text-black/70 hover:!text-primary dark:text-white/70" />
+                            </a>
+                            <ul *hlMenuItems @toggleAnimation class="ltr:right-0 rtl:left-0">
+                                <li>
+                                    <a routerLink="/app/tasks" *hlMenuItem="let menuItem">View All</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" *hlMenuItem="let menuItem">Add New Task</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" (click)="loadTaskStatistics()" *hlMenuItem="let menuItem">Refresh</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-9">
+                    <div class="flex items-center">
+                        <div class="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                            <div
+                                class="grid h-9 w-9 place-content-center rounded-full bg-secondary-light text-secondary dark:bg-secondary dark:text-secondary-light"
+                            >
+                                <icon-inbox />
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="mb-2 flex font-semibold text-white-dark">
+                                <h6>In Progress</h6>
+                                <p class="ltr:ml-auto rtl:mr-auto">{{inProgressTasks}}</p>
+                            </div>
+                            <div class="h-2 rounded-full bg-dark-light shadow dark:bg-[#1b2e4b]">
+                                <div class="h-full w-11/12 rounded-full bg-gradient-to-r from-[#7579ff] to-[#b224ef]" [style.width.%]="(inProgressTasks / (completedTasks+inProgressTasks+tasksDoneByOthers)) * 100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                            <div class="grid h-9 w-9 place-content-center rounded-full bg-success-light text-success dark:bg-success dark:text-success-light">
+                                <icon-tag />
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="mb-2 flex font-semibold text-white-dark">
+                                <h6>Done</h6>
+                                <p class="ltr:ml-auto rtl:mr-auto">{{completedTasks}}</p>
+                            </div>
+                            <div class="h-2 w-full rounded-full bg-dark-light shadow dark:bg-[#1b2e4b]">
+                                <div class="h-full w-full rounded-full bg-gradient-to-r from-[#3cba92] to-[#0ba360]" [style.width.%]="(completedTasks / (completedTasks+inProgressTasks+tasksDoneByOthers)) * 100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="h-9 w-9 ltr:mr-3 rtl:ml-3">
+                            <div class="grid h-9 w-9 place-content-center rounded-full bg-warning-light text-warning dark:bg-warning dark:text-warning-light">
+                                <icon-credit-card />
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="mb-2 flex font-semibold text-white-dark">
+                                <h6>Done by other team members</h6>
+                                <p class="ltr:ml-auto rtl:mr-auto">{{tasksDoneByOthers}}</p>
+                            </div>
+                            <div class="h-2 w-full rounded-full bg-dark-light shadow dark:bg-[#1b2e4b]">
+                                <div class="h-full w-full rounded-full bg-gradient-to-r from-[#f09819] to-[#ff5858]" [style.width.%]="(tasksDoneByOthers / (completedTasks+inProgressTasks+tasksDoneByOthers)) * 100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="panel h-full pb-0 sm:grid-cols-2 xl:grid-cols-3">
+                <h5 class="mb-5 text-lg font-semibold dark:text-white-light">Recent Activities</h5>
+                <ng-scrollbar class="relative mb-4 !h-[310px] ltr:-mr-8">
+                    <div class="cursor-pointer text-sm pr-3">
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-primary ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Updated Project Thesis</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">Just Now</div>
+
+                            <span
+                                class="badge badge-outline-primary absolute bg-primary-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-success ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Send Mail to your Lecturer</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">2 min ago</div>
+
+                            <span
+                                class="badge badge-outline-success absolute bg-success-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-danger ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Snd mail to Sir Yasas and ask for suggestions</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">14:00</div>
+
+                            <span
+                                class="badge badge-outline-danger absolute bg-danger-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-black ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Study for CIS Exam</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">16:00</div>
+
+                            <span
+                                class="badge badge-outline-dark absolute bg-dark-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-warning ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Do RMET Homework</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">17:00</div>
+
+                            <span
+                                class="badge badge-outline-warning absolute bg-warning-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >In progress</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-info ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Prepare CGM Presentation</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">17:00</div>
+
+                            <span
+                                class="badge badge-outline-info absolute bg-info-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-secondary ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Send proposal draft to Miss Gayana</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">18:00</div>
+
+                            <span
+                                class="badge badge-outline-secondary absolute bg-secondary-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-primary ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Mindmap the new project with friends</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">Just Now</div>
+
+                            <span
+                                class="badge badge-outline-primary absolute bg-primary-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-success ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Look for internships</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">2 min ago</div>
+
+                            <span
+                                class="badge badge-outline-success absolute bg-success-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-danger ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Schedule meeting with Sir Yasas</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">14:00</div>
+
+                            <span
+                                class="badge badge-outline-danger absolute bg-danger-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-black ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Collect documents from Edwin</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">16:00</div>
+
+                            <span
+                                class="badge badge-outline-dark absolute bg-dark-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-warning ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Conference call with friends.</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">17:00</div>
+
+                            <span
+                                class="badge badge-outline-warning absolute bg-warning-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >In progress</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-info ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Ask Miss Gayana about coursework</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">17:00</div>
+
+                            <span
+                                class="badge badge-outline-info absolute bg-info-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Completed</span
+                            >
+                        </div>
+                        <div class="group relative flex items-center py-1.5">
+                            <div class="h-1.5 w-1.5 rounded-full bg-secondary ltr:mr-1 rtl:ml-1.5"></div>
+                            <div class="flex-1">Mail miss Nideshika about extra classes</div>
+                            <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">18:00</div>
+
+                            <span
+                                class="badge badge-outline-secondary absolute bg-secondary-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]"
+                                >Pending</span
+                            >
+                        </div>
+                    </div>
+                </ng-scrollbar>
+                <div class="border-t border-white-light dark:border-white/10">
+                    <a href="javascript:;" class="group group flex items-center justify-center p-4 font-semibold hover:text-primary">
+                        View All
+                        <icon-arrow-left
+                            class="transition duration-300 group-hover:translate-x-1 ltr:ml-1 rtl:mr-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+                        />
+                    </a>
+                </div>
+            </div> -->
+            <div class="panel h-full pb-0 sm:grid-cols-2 xl:grid-cols-3">
+                <h5 class="mb-5 text-lg font-semibold dark:text-white-light">Recent Activities</h5>
+            
+                <!-- Check if activities are available -->
+                <ng-container *ngIf="activities && activities.length; else comingSoon">
+                    <ng-scrollbar class="relative mb-4 !h-[310px] ltr:-mr-8">
+                        <div class="cursor-pointer text-sm pr-3">
+                            <!-- Loop through activities -->
+                            <div *ngFor="let activity of activities" class="group relative flex items-center py-1.5">
+                                <div [ngClass]="{'bg-primary': activity.status === 'pending', 'bg-success': activity.status === 'completed'}" class="h-1.5 w-1.5 rounded-full ltr:mr-1 rtl:ml-1.5"></div>
+                                <div class="flex-1">{{ activity.name }}</div>
+                                <div class="text-xs text-white-dark ltr:ml-auto rtl:mr-auto dark:text-gray-500">{{ activity.time }}</div>
+                                <span class="badge badge-outline-primary absolute bg-primary-light text-xs opacity-0 group-hover:opacity-100 ltr:right-0 rtl:left-0 dark:bg-[#0e1726]">
+                                    {{ activity.status | titlecase }}
+                                </span>
+                            </div>
+                        </div>
+                    </ng-scrollbar>
+                </ng-container>
+            
+                <!-- "Coming Soon" message if no activities are available -->
+                <ng-template #comingSoon>
+                    <div class="text-center text-lg font-semibold text-gray-500">Coming Soon</div>
+                </ng-template>
+            
+                <div class="border-t border-white-light dark:border-white/10" *ngIf="activities && activities.length">
+                    <a href="javascript:;" class="group group flex items-center justify-center p-4 font-semibold hover:text-primary">
+                        View All
+                        <icon-arrow-left
+                            class="transition duration-300 group-hover:translate-x-1 ltr:ml-1 rtl:mr-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
+                        />
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="panel h-full">
+                <div class="-mx-5 mb-5 flex items-start justify-between border-b border-[#e0e6ed] p-5 pt-0 dark:border-[#1b2e4b] dark:text-white-light">
+                    <h5 class="text-lg font-semibold">Activity Log</h5>
+                    <div hlMenu class="dropdown" appDropdownPosition
+                    (appDropdownPositionChange)="dropdownPosition = $event">
+                        <button type="button" hlMenuButton>
+                            <icon-horizontal-dots class="text-black/70 hover:!text-primary dark:text-white/70" />
+                        </button>
+                        <ul *hlMenuItems @toggleAnimation class="ltr:right-0 rtl:left-0">
+                            <li>
+                                <a href="javascript:;" *hlMenuItem="let menuItem">View All</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" *hlMenuItem="let menuItem">Mark as Read</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ng-scrollbar class="relative !h-[300px] ltr:-mr-8">
+                    <div class="space-y-7 pr-3">
+                        <div class="flex">
+                            <div
+                                class="relative z-10 shrink-0 before:absolute before:left-4 before:top-10 before:h-[calc(100%-24px)] before:w-[2px] before:bg-white-dark/30 ltr:mr-2 rtl:ml-2"
+                            >
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-white shadow shadow-secondary">
+                                    <icon-plus class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">
+                                    New project files created : <a href="javascript:;" class="text-success">[CGM - 3D Video]</a>
+                                </h5>
+                                <p class="text-xs text-white-dark">27 Feb, 2020</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="relative z-10 shrink-0 before:absolute before:left-4 before:top-10 before:h-[calc(100%-24px)] before:w-[2px] before:bg-white-dark/30 ltr:mr-2 rtl:ml-2"
+                            >
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-success text-white shadow-success">
+                                    <icon-mail class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">
+                                    Mail sent to <a href="javascript:;" class="text-white-dark">Sir Yasas</a> and
+                                    <a href="javascript:;" class="text-white-dark">Miss Gayana</a>
+                                </h5>
+                                <p class="text-xs text-white-dark">28 Feb, 2020</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="relative z-10 shrink-0 before:absolute before:left-4 before:top-10 before:h-[calc(100%-24px)] before:w-[2px] before:bg-white-dark/30 ltr:mr-2 rtl:ml-2"
+                            >
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white">
+                                    <icon-checks class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">Economics coursework done</h5>
+                                <p class="text-xs text-white-dark">27 Feb, 2020</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="relative z-10 shrink-0 before:absolute before:left-4 before:top-10 before:h-[calc(100%-24px)] before:w-[2px] before:bg-white-dark/30 ltr:mr-2 rtl:ml-2"
+                            >
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-danger text-white">
+                                    <icon-checks class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">
+                                    Task Completed : <a href="javascript:;" class="text-success">[Send Mail to Sir Vibhavi]</a>
+                                </h5>
+                                <p class="text-xs text-white-dark">01 Mar, 2020</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="relative z-10 shrink-0 before:absolute before:left-4 before:top-10 before:h-[calc(100%-24px)] before:w-[2px] before:bg-white-dark/30 ltr:mr-2 rtl:ml-2"
+                            >
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-warning text-white">
+                                    <icon-file class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">Documents Submitted to <a href="javascript:;">Miss Gayana</a></h5>
+                                <p class="text-xs text-white-dark">10 Mar, 2020</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="shrink-0 ltr:mr-2 rtl:ml-2">
+                                <div class="flex h-8 w-8 items-center justify-center rounded-full bg-dark text-white">
+                                    <icon-server class="h-4 w-4" />
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold dark:text-white-light">Made presentation slides for RMET VIVA</h5>
+                                <p class="text-xs text-white-dark">06 Apr, 2020</p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-scrollbar>
+            </div> -->
+        </div>
+        <div class="mb-5 font-bold">
+            <span class="text-lg mr-9">Your Current Project Teams</span>
+            <a routerLink="/app/projects" class="text-primary hover:text-black ltr:ml-auto rtl:mr-auto dark:hover:text-white-dark"> See All </a>
+        </div>
+        <div *ngIf="!projectsLoading" class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div *ngFor="let project of projects | slice:0:3;" class="panel h-full">
+              <div class="-m-5 mb-5 flex items-center justify-between border-b border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+                <div class="flex">
+                  <div class="media-aside align-self-start">
+                    <div class="shrink-0 rounded-full ring-2 ring-white-light ltr:mr-4 rtl:ml-4 dark:ring-dark">
+                      <img
+                        [src]="project.imageUrl | assetPath"
+                        fallbackImage="./assets/images/no-image-placeholder.png"
+                        alt="Project Image"
+                        class="h-10 w-10 rounded-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div class="font-semibold">
+                    <h6>{{ project.name }}</h6>
+                    <p class="mt-1 text-xs text-white-dark">Due on {{ project.endDate | date: 'dd/MM/yyyy' }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="pb-8 text-center font-semibold">
+                <div class="mb-4 text-primary">{{ project.collaborators.length }} {{ project.collaborators.length === 1 ? 'Member' : 'Members' }} In Your Group</div>
+                <div class="flex items-center justify-center gap-3 pb-8">
+                  <ng-container *ngFor="let collaborator of project.collaborators | slice:0:5">
+                    <img
+                        [src]="collaborator.imagePath | assetPath"
+                        fallbackImage="./assets/images/no-profilepic.png"
+                        alt="{{ collaborator.fullName }}"
+                        class="h-10 w-10 overflow-hidden rounded-lg object-cover ring-2 ring-white-light dark:ring-dark"
+                    />
+                  </ng-container>
+                </div>
+                <div class="absolute bottom-0 -mx-5 flex w-full items-center justify-between p-5">
+                  <button
+                    class="btn btn-secondary btn-lg w-full border-0 bg-gradient-to-r from-[#3d38e1] to-[#1e9afe]"
+                    (click)="viewProject(project)"
+                  >
+                    View Project
+                  </button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div *ngIf="projectsLoading" class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div class="panel h-full animate-pulse">
+                <!-- Header section -->
+                <div class="-m-5 mb-5 flex items-center justify-between border-b border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+                  <div class="flex items-center">
+                    <!-- Avatar placeholder -->
+                    <div class="shrink-0 rounded-full ring-2 ring-white-light ltr:mr-4 rtl:ml-4 dark:ring-dark">
+                      <div class="h-10 w-10 rounded-full bg-gray-200"></div>
+                    </div>
+                    <!-- Text placeholders -->
+                    <div class="space-y-2">
+                      <div class="h-4 w-32 rounded bg-gray-200"></div>
+                      <div class="h-3 w-24 rounded bg-gray-200"></div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Collaborators section -->
+                <div class="pb-8 text-center font-semibold">
+                  <div class="mb-4 h-4 w-40 mx-auto rounded bg-gray-200"></div>
+                  <div class="flex items-center justify-center gap-3 pb-8">
+                    <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+                      <div class="h-10 w-10 rounded-lg bg-gray-200 ring-2 ring-white-light dark:ring-dark"></div>
+                    </ng-container>
+                  </div>
+                  <!-- Button placeholder -->
+                  <div class="absolute bottom-0 -mx-5 flex w-full items-center justify-between p-5">
+                    <div class="h-10 w-full rounded bg-gray-200"></div>
+                  </div>
+                </div>
+            </div>              
+        </div>
+    </div>
+</div>
+<div>
+    <ngx-custom-modal #modal20 customClass="modal-top  extra-large-modal">
+        <ng-template #modalHeader> <div class="!py-5">Welcome! Let's Complete Your Profile</div> </ng-template>
+        <ng-template #modalBody>
+            <form class="space-y-5" (ngSubmit)="submit()" [formGroup]="form">
+                <div>
+                    <label for="ProfileImage">Profile Image</label>
+                    <input
+                        id="ProfileImage"
+                        type="file"
+                        accept="image/*"
+                        (change)="onFileSelected($event)"
+                        class="form-input"
+                    />
+                    <div *ngIf="imagePreview" class="mt-2">
+                        <img [src]="imagePreview" alt="Profile Image Preview" class="h-24 w-24 rounded-full object-cover" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="FirstName">First Name</label>
+                        <input id="FirstName" type="text" placeholder="Enter your first name." class="form-input" [formControl]="$any(form.controls['firstName'])"/>
+                    </div>
+                    <div>
+                        <label for="LastName">Last Name</label>
+                        <input id="LastName" type="text" placeholder="Enter your last name." class="form-input" [formControl]="$any(form.controls['lastName'])"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="Phone">Phone</label>
+                        <input id="Phone" type="text" placeholder="Enter your phone number." class="form-input" [formControl]="$any(form.controls['phone'])"/>
+                    </div>
+                    <div>
+                        <label for="Email">Email Address</label>
+                        <input id="Email" type="text" placeholder="Enter your email address." class="form-input" [formControl]="$any(form.controls['email'])"/>
+                    </div>
+                </div>
+                <div>
+                    <label for="Address">Address</label>
+                    <input id="Address" type="text" placeholder="Enter your Address" class="form-input" [formControl]="$any(form.controls['address'])"/>
+                </div>
+                <div>
+                    <label for="Country">Country</label>
+                    <input id="Country" type="text" placeholder="Enter your Country" class="form-input" [formControl]="$any(form.controls['country'])"/>
+                </div>
+                <div>
+                    <label class="flex items-center mt-1 cursor-pointer">
+                        <input type="checkbox" class="form-checkbox" [formControl]="$any(form.controls['allowEmailReminders'])"/>
+                        <span class="text-white-dark">Allow StudentHub to send email reminders and notifications</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary !mt-6">Submit</button>
+            </form>
+        </ng-template>
+    </ngx-custom-modal>
+</div>

@@ -1,0 +1,69 @@
+<div class="breadcrumbs p-5">
+    <nav>
+        <ng-container *ngIf="projectName">
+            <a routerLink="/app/projects" class="text-blue-600 hover:underline">Projects</a> >
+            <span class="text-gray-500">{{ projectName }}</span>
+        </ng-container>
+    </nav>
+</div>
+
+<div class="panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]"  *ngIf="projectDetails">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">{{ projectName }}
+            <span class="project-role-tag text-xs px-3 py-1 rounded-full font-medium" [ngClass]="{'bg-orange-200 text-orange-700': projectDetails.role === 'Owner', 'bg-yellow-200 text-yellow-700': projectDetails.role === 'Member'}">
+            {{ projectDetails.role }}
+            </span>
+        </h2>        
+        <button class="btn btn-secondary text-sm" (click)="closeDetails()">Close</button>
+    </div>
+    <!-- Project Thumbnail -->
+    <div class="project-thumbnail h-40 bg-gray-200 rounded-md flex items-center justify-center mb-4">
+        <img *ngIf="projectDetails?.imageUrl" [src]="projectDetails.imageUrl | assetPath" fallbackImage="./assets/images/no-image-placeholder.png" alt="Project Image" class="h-full w-full object-cover rounded-md">
+        <i *ngIf="!projectDetails?.imageUrl" class="fas fa-folder-open text-gray-400 text-5xl"></i>
+    </div>
+
+    <!-- Project Info -->
+    <p class="text-sm text-gray-500"><strong>Description:</strong> {{ projectDetails.description || 'No description available' }}</p>
+    <p class="text-sm text-gray-500"><strong>Status:</strong> 
+        <span class="status-badge text-xs px-3 py-1 rounded-full font-medium ml-2" 
+              [ngClass]="{'bg-green-200 text-green-700': projectDetails.status === 'Ongoing', 
+                          'bg-blue-200 text-blue-700': projectDetails.status === 'Done'}">
+            {{ projectDetails.status }}
+        </span>
+    </p>
+
+    <!-- Collaborators -->
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold mb-3">Collaborators</h3>
+        <div class="flex space-x-4">
+            <div *ngFor="let collaborator of collaborators" class="text-center">
+                <img [src]="collaborator.imagePath" alt="{{ collaborator.fullName }}" class="h-12 w-12 rounded-full border">
+                <p class="text-xs mt-1">{{ collaborator.fullName }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Collaborator Section -->
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold mb-3">Add Collaborator</h3>
+        <div class="flex items-center space-x-4">
+            <!-- Dropdown to select user -->
+            <select [(ngModel)]="selectedUserId" class="border p-2 rounded" [disabled]="projectDetails.role === 'Member'">
+                <option [ngValue]="null" selected>Select a user</option>
+                <option *ngFor="let user of usersToAssign" [value]="user.id">{{ user.firstName + '' + user.lastName }}</option>
+            </select>
+            <!-- Add button -->
+            <span ngxTippy="You do not have permissions to add a collaborator" *ngIf="projectDetails.role === 'Member'" class="tooltip">
+                <button class="btn btn-primary" (click)="addCollaborator()" [disabled]="usersToAssign.length==0 || selectedUserId == null || projectDetails.role === 'Member'">Add</button>
+            </span>
+            <span *ngIf="projectDetails.role !== 'Member'" class="tooltip">
+                <button class="btn btn-primary" (click)="addCollaborator()" [disabled]="usersToAssign.length==0 || selectedUserId == null || projectDetails.role === 'Member'">Add</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-6 flex justify-end">
+        <button class="btn btn-primary" (click)="editProject()">Edit Project</button>
+    </div>
+</div>

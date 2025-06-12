@@ -1,0 +1,29 @@
+/* Add custom scrollbar styling */
+.ng-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.ng-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ng-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.ng-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.form-input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.h-24.w-24.rounded-full {
+  border: 2px solid #e5e7eb;
+}

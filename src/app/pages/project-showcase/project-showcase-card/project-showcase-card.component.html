@@ -1,0 +1,7 @@
+<div class="project-card bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <h4 class="font-semibold text-lg text-primary">{{ project.title }}</h4>
+    <p class="text-sm text-gray-500"><strong>By:</strong> {{ project.author }}</p>
+    <p class="text-sm text-gray-500"><strong>Description:</strong> {{ project.description }}</p>
+    <p class="text-sm text-gray-500"><strong>Technologies:</strong> {{ project.technologies.join(', ') }}</p>
+    <button class="btn btn-primary mt-4 w-full" (click)="viewProject(project)">View Project</button>
+</div>

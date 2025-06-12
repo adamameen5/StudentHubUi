@@ -1,0 +1,7 @@
+<div class="lecturer-card bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <h4 class="font-semibold text-lg text-primary">{{ lecturer.name }}</h4>
+    <p class="text-sm text-gray-500"><strong>Email:</strong> {{ lecturer.email }}</p>
+    <p class="text-sm text-gray-500"><strong>Office Hours:</strong> {{ lecturer.officeHours }}</p>
+    <button class="btn btn-secondary mt-2" (click)="viewDetails(lecturer)">View Details</button>
+    <button class="btn btn-info mt-2" (click)="scheduleMeeting(lecturer)">Schedule Meeting</button>
+</div>

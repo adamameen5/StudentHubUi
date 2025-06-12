@@ -1,0 +1,17 @@
+<div class="breadcrumbs p-5">
+    <nav>
+        <ng-container *ngIf="subjectName">
+            <a routerLink="/app/course-engagement" class="text-blue-600 hover:underline">Subjects</a> >
+            <span class="text-gray-500">{{ subjectName }}</span>
+        </ng-container>
+    </nav>
+</div>
+
+<div class="lecturer-list panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <h3 class="text-lg font-semibold mb-4">Lecturers for Subject : {{subjectName}}</h3>
+    <h4 class="text-sm font-semibold mb-4">Subject ID: {{subjectId}}</h4>    
+
+    <div class="flex flex-col space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <app-lecturer-card *ngFor="let lecturer of lecturers" [lecturer]="lecturer" (viewDetails)="viewDetails(lecturer)" (scheduleMeeting)="scheduleMeeting(lecturer)"></app-lecturer-card>
+    </div>
+</div>

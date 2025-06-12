@@ -1,0 +1,42 @@
+<div class="panel border-[#e0e6ed] p-5 dark:border-[#1b2e4b]">
+    <!-- Search Bar and Actions -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center mb-4">
+        <div class="flex items-center gap-2">
+            <input
+                [(ngModel)]="searchQuery"
+                type="text"
+                class="form-input w-full md:w-80"
+                placeholder="Search for jobs..."
+                (input)="filterJobs()"
+            />
+            <button type="button" class="btn btn-primary" (click)="filterJobs()">Search</button>
+        </div>
+        <div class="flex items-center gap-2 ltr:ml-auto rtl:mr-auto">
+            <select [(ngModel)]="selectedJobType" class="form-select" (change)="filterJobs()">
+                <option value="">All Job Types</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Internship">Internship</option>
+                <option value="Remote">Remote</option>
+            </select>
+            <input
+                [(ngModel)]="location"
+                type="text"
+                class="form-input w-full md:w-60"
+                placeholder="Location"
+                (input)="filterJobs()"
+            />
+            <select [(ngModel)]="experienceLevel" class="form-select" (change)="filterJobs()">
+                <option value="">All Levels</option>
+                <option value="Entry-Level">Entry-Level</option>
+                <option value="Mid-Level">Mid-Level</option>
+                <option value="Senior-Level">Senior-Level</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Job Listings -->
+    <div class="job-listings grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <app-job-card *ngFor="let job of filteredJobs" [job]="job"></app-job-card>
+    </div>
+</div>
